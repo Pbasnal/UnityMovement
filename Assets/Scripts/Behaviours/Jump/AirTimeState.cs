@@ -20,8 +20,6 @@ public class AirTimeState : IBehaviourState<IJump, JumpStates>
 
     public void Update(IJump jumper)
     {
-        Debug.Log("AirTime");
-
         if (Input.GetButtonUp("Jump") && jumper.ExtraJumps <= jumper.MaxExtraJumps)
         {
             stateMachine.ChangeState(JumpStates.Jump);

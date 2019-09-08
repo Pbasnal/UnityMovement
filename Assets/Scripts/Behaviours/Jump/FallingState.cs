@@ -16,14 +16,13 @@ public class FallingState : IBehaviourState<IJump, JumpStates>
 
     public void Update(IJump jumper)
     {
-        Debug.Log("OnGround");
         if (Input.GetButtonUp("Jump") && jumper.ExtraJumps <= jumper.MaxExtraJumps)
         {
-            Debug.Log("Gravity: " + Physics.gravity.y);
-            var jumpVelocity = Mathf.Sqrt(2 * -Physics.gravity.y * jumper.JumpHeight);
+            stateMachine.ChangeState(JumpStates.Jump);
+            //var jumpVelocity = Mathf.Sqrt(2 * -Physics.gravity.y * jumper.JumpHeight);
 
-            jumper.Rigidbody.velocity = Vector3.up * jumpVelocity;
-            jumper.ExtraJumps++;
+            //jumper.Rigidbody.velocity = Vector3.up * jumpVelocity;
+            //jumper.ExtraJumps++;
         }
         else if (jumper.Rigidbody.velocity.y == 0)
         {

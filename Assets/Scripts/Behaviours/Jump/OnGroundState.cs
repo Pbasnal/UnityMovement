@@ -16,8 +16,7 @@ public class OnGroundState : IBehaviourState<IJump, JumpStates>
 
     public void Update(IJump jumper)
     {
-        Debug.Log("OnGround");
-        if (Input.GetButtonUp("Jump"))
+        if (Input.GetButtonUp("Jump") && jumper.JumpHeight > 0)
         {
             jumper.ExtraJumps = 0;
             stateMachine.ChangeState(JumpStates.Jump);
