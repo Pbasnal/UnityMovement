@@ -1,4 +1,4 @@
-﻿public enum ForwardState
+﻿public enum MovementState
 {
     NotMoving = 0,
     Acceleration,

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ForwardController : MonoBehaviour
+public class MovementController2 : MonoBehaviour
 {
     public int maxVelocity = 5;
     public float timeToMaxVelocitySec = 3;
