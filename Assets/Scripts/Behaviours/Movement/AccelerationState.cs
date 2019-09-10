@@ -37,14 +37,13 @@ public class AccelerationState : IBehaviourState<IMove, MovementState>
         {
             stateMachine.ChangeState(MovementState.Deacceleration);
         }
-        else if (gameObject.Rigidbody.velocity.magnitude >= gameObject.MaxVelocity)
+        else if (m_velocity.magnitude >= gameObject.MaxVelocity)
         {
             stateMachine.ChangeState(MovementState.MaxSpeed);
         }
         else
         {
-            gameObject.Rigidbody.velocity = m_velocity;
-            //gameObject.Rigidbody.MovePosition
+            gameObject.Rigidbody.MovePosition(gameObject.Transform.position + m_velocity * Time.deltaTime);
         }
     }
 }

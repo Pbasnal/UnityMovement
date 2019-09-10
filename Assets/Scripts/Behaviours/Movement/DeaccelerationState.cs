@@ -40,7 +40,7 @@ public class DeaccelerationState : IBehaviourState<IMove, MovementState>
         }
         else
         {
-            gameObject.Rigidbody.velocity = m_velocity;
+            gameObject.Rigidbody.MovePosition(gameObject.Transform.position + m_velocity * Time.deltaTime);
         }
     }
 }
