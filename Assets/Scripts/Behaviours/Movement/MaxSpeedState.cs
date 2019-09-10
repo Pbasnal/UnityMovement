@@ -23,8 +23,8 @@ public class MaxSpeedState : IBehaviourState<IMove, MovementState>
         }
         else
         {
-            var velocity = (Vector3.forward * v + Vector3.right * h) * gameObject.MaxVelocity * Time.deltaTime;
-            gameObject.Rigidbody.MovePosition(gameObject.Transform.position + velocity);
+            gameObject.PreviousVelocity = (Vector3.forward * v + Vector3.right * h) * gameObject.MaxVelocity;
+            gameObject.Rigidbody.MovePosition(gameObject.Transform.position + gameObject.PreviousVelocity);
         }
     }
 }

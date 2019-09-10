@@ -3,12 +3,13 @@ using UnityEngine;
 
 public class MovementController : MonoBehaviour, IMove
 {
-    public int maxVelocity;
+    [Range(0, 1)]
+    public float maxVelocity;
     public float timeToMaxVelocitySec;
     public float timeToZeroVelocitySec;
     public MovementState currentState;
 
-    public int MaxVelocity => maxVelocity;
+    public float MaxVelocity => maxVelocity;
     public float TimeToMaxVelocitySec => timeToMaxVelocitySec;
     public float TimeToZeroVelocitySec => timeToZeroVelocitySec;
     public Transform Transform => gameObject.transform;
@@ -19,7 +20,11 @@ public class MovementController : MonoBehaviour, IMove
         set { currentState = value; }
     }
 
-    public Vector3 PreviousVelocity => m_previousVelocity;
+    public Vector3 PreviousVelocity
+    {
+        get { return m_previousVelocity; }
+        set { m_previousVelocity = value; }
+    }
 
     private Rigidbody m_rigidBody;
     private Vector3 m_previousVelocity;
@@ -43,7 +48,6 @@ public class MovementController : MonoBehaviour, IMove
     void FixedUpdate()
     {
         movementMachine.Update();
-        m_previousVelocity = m_rigidBody.velocity;
         currentState = movementMachine.currentState;
     }
 }

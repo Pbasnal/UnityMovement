@@ -2,10 +2,10 @@
 
 public interface IMove
 {
-    int MaxVelocity { get; }
+    float MaxVelocity { get; }
     float TimeToMaxVelocitySec { get; }
     float TimeToZeroVelocitySec { get; }
-    Vector3 PreviousVelocity { get; }
+    Vector3 PreviousVelocity { get; set; }
     Rigidbody Rigidbody { get; }
     Transform Transform { get; }
     MovementState CurrentState { get; set; }

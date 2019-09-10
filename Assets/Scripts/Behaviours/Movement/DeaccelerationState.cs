@@ -4,7 +4,8 @@ public class DeaccelerationState : IBehaviourState<IMove, MovementState>
 {
     public BehaviourStateMachine<IMove, MovementState> stateMachine { get; set; }
     private float m_accel;
-    private Vector3 m_velocity;
+    private Vector3 velocity;
+    private Vector3 unitVelocity;
 
     public void OnEnter(IMove gameObject)
     {
@@ -14,8 +15,9 @@ public class DeaccelerationState : IBehaviourState<IMove, MovementState>
             time = 0.5f;
         }
         m_accel = gameObject.MaxVelocity / time;
+        velocity = gameObject.PreviousVelocity;
 
-        m_velocity = gameObject.Rigidbody.velocity;
+        unitVelocity = velocity / velocity.magnitude;
     }
 
     public void OnExit(IMove gameObject)
@@ -26,22 +28,22 @@ public class DeaccelerationState : IBehaviourState<IMove, MovementState>
     {
         var h = Input.GetAxisRaw("Horizontal");
         var v = Input.GetAxisRaw("Vertical");
-        var tr = gameObject.Transform;
-        m_velocity -= (tr.forward * m_accel + tr.right * m_accel) * Time.deltaTime;
+        velocity -= unitVelocity * m_accel * Time.deltaTime;
 
-        if (h != 0 && v != 0)
+        if (h != 0 || v != 0)
         {
             stateMachine.ChangeState(MovementState.Acceleration);
         }
-        else if (gameObject.PreviousVelocity.magnitude - m_velocity.magnitude <= 0)
+        else if (gameObject.PreviousVelocity.magnitude - velocity.magnitude <= 0)
         {
-            gameObject.Rigidbody.velocity = Vector3.zero;
+            gameObject.PreviousVelocity = Vector3.zero;
             stateMachine.ChangeState(MovementState.NotMoving);
         }
         else
         {
-            gameObject.Rigidbody.MovePosition(gameObject.Transform.position + m_velocity * Time.deltaTime);
-        }
+            gameObject.Rigidbody.MovePosition(gameObject.Transform.position + velocity);
+            gameObject.PreviousVelocity = velocity;
+        }        
     }
 }
 
